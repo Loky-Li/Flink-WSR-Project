@@ -12,7 +12,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow
 import org.apache.flink.util.Collector
 
 
-object AdAnalysisByProvince {
+object AdAnalysisByProvince_BlackList {
     def main(args: Array[String]): Unit = {
         val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
         env.setParallelism(1)
