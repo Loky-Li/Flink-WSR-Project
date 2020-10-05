@@ -57,7 +57,8 @@ class LoginFailDetect() extends PatternSelectFunction[LoginEvent, Warning] {
         val firstLoginFail = map.get("firstFail").get(0)
         val secondLoginFail = map.get("secondFail").get(0)  //因为没有times(n)循环模式，所以只有一条记录
 
-        // todo 扩展：视频后面有 使用 time()的演示。但是并不是严格近邻。
+        // todo 扩展：视频后面有演示 使用在“first”times()的演示。但默认并不是严格近邻。
+        // 当然如果times(n) 想要严格近邻，可以在后面再加一个 .consecutive()，具体可以看官网
 
         Warning(firstLoginFail.userId,
             firstLoginFail.eventTime,
