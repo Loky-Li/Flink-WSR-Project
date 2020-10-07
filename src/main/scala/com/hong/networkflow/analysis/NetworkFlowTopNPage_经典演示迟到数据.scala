@@ -116,6 +116,8 @@ class TopNHotPage(n: Int) extends KeyedProcessFunction[Long, PageViewCount, Stri
         ctx.timerService().registerEventTimeTimer(value.windowEnd + 1)          // 触发计算的时间戳。
 //        （我发现，当一条允许等待的数据属于多个窗口的时候，在这里每个窗口都会注册一个定时器，
 //        然后不仅agg打印多个，窗口的计算result也会打印多个。可以看测试数据中 31秒输入后，再输入53秒的现象）
+        //假设当前WaterMark已经到了51，当31秒进来的时候，会注册 35,40,45,50 这几个窗口对应的1s后的定时器，有些定时器小于当前 WM 51秒，
+//        但是并不会立即触发，而需要WM更新。即53秒数据进来，WM更新为52秒，这时候，几个窗口的定时器就会触发。
 
         ctx.timerService().registerEventTimeTimer(value.windowEnd + 60*1000L)   // 等待了迟到数据，真正清空窗口的时间戳
     }
